@@ -1,0 +1,73 @@
+<p class="h4 text-center">usuarios</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 mt-4">
+      <button type="button" (click)="new()" class="btn btn-primary">
+        Nuevo
+      </button>
+      <table class="table caption-top ">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>apellido</th>
+            <th>correo</th>
+            <th>telefono</th>
+            <th>Rol</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <th scope="row">{{user.id}}</th>
+            <td>{{user.name}}</td>
+            <td>{{user.lastName}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.phoneNumber}}</td>
+            <td>{{user.role.name}}</td>
+            <td><button type="button" class="btn btn-primary " (click)="modify(user)">editar</button><button
+                type="button" class="btn btn-danger ml-2" (click)="delete(user.id)">eliminar</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="show" class="col-md-4 mt-4">
+      <p class="h5">Registrar nuevo usuario</p>
+      <div class="mb-3">
+        <label for="name" class="form-label">Nombre</label>
+        <input type="text" class="form-control" name="name" id="name" #name=ngModel [(ngModel)]="model.name">
+      </div>
+      <div class="mb-3">
+        <label for="ap" class="form-label">Apellido</label>
+        <input type="text" class="form-control" name="ap" id="ap" #ap=ngModel [(ngModel)]="model.lastName">
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo</label>
+        <input type="text" class="form-control" name="email" id="email" #email=ngModel [(ngModel)]="model.email">
+      </div>
+      <div class="mb-3">
+        <label for="tel" class="form-label">Telefono</label>
+        <input type="tel" class="form-control" name="tel" id="tel" #tel=ngModel [(ngModel)]="model.phoneNumber">
+      </div>
+      <div class="mb-3">
+        <small class="text-center">Roles</small>
+        <div class="form-check" *ngFor="let role of roles">
+          <input class="form-check-input" type="radio" (change)="addRol($event, role)" name="flexRadioDefault"
+            id="flexRadioDefault1">
+          <label class="form-check-label" for="flexRadioDefault1">
+            {{role.name}}
+          </label>
+        </div>
+      </div>
+      <button type="button" (click)="save()" class="btn btn-primary my-3">
+        Guardar
+      </button>
+
+      <button type="button" (click)="new()" class="btn btn-danger">
+        Cancelar
+      </button>
+      <p *ngIf="success" class="mt-4 text-success h4">{{message}}</p>
+    </div>
+
+  </div>
+</div>

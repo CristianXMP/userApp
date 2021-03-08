@@ -1,0 +1,63 @@
+<p class="h4 text-center">Roles</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 mt-4">
+      <button type="button" (click)="new()" class="btn btn-primary">
+        Nuevo
+      </button>
+      <table class="table caption-top ">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let role of roles">
+            <th scope="row">{{role.id}}</th>
+            <td>{{role.name}}</td>
+            <td><button type="button" class="btn btn-primary " (click)="modify(role)">editar</button><button
+                type="button" class="btn btn-danger ml-2" (click)="delete(role.id)">eliminar</button>
+              <button type="button" class="btn btn-success ml-2" (click)="showPermissions(role)">permisos</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="show" class="col-md-6 mt-4">
+      <p *ngIf="!model.id" class="h5">Registrar nuevo rol</p>
+      <p *ngIf="model.id" class="h5">Actualizar rol {{model.name}}</p>
+      <div class="mb-3">
+        <label for="perm" class="form-label">Nombre</label>
+        <input type="text" class="form-control" name="name" id="perm" #name=ngModel [(ngModel)]="model.name">
+      </div>
+      <ul>
+        <li class="form-check" *ngFor="let permission of permissions">
+          <div> <input class="form-check-input" type="checkbox" (change)="addPerm($event, permission)"
+              name="permission.name">
+          </div>
+          <label class="form-check-label">
+            {{permission.name}}
+          </label>
+        </li>
+      </ul>
+
+      <button type="button" (click)="save()" class="btn btn-primary my-3">
+        Guardar
+      </button>
+
+      <button type="button" (click)="new()" class="btn btn-danger">
+        Cancelar
+      </button>
+      <p *ngIf="success" class="mt-4 text-success h4">{{message}}</p>
+    </div>
+    <ul *ngIf="showPerms" class="list-group mt-5 col-md-6 mt-4 position-relative">
+      <p class="h4">Permisos del rol {{model.name}}</p>
+      <li *ngFor="let permi of model.permissions" class="list-group-item">{{permi.name}} <button
+          class="btn btn-danger btn-sm position-absolute top-0 end-0 mt-2 mr-2"
+          (click)="deleteOnePermissio(model.id, permi.id)">eliminar</button></li>
+    </ul>
+
+  </div>
+</div>
